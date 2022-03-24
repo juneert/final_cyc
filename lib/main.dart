@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 late String initiaRoute = '/authen'; //เมื่อเป็น null จะทำตรงนี้เลย
 
-Future<Null> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp().then((value) async {
     await FirebaseAuth.instance.authStateChanges().listen((event) {

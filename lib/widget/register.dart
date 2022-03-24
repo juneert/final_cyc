@@ -1,7 +1,9 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyc_test/utility/dialog.dart';
 import 'package:cyc_test/utility/my_style.dart';
+import 'package:cyc_test/widget/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +17,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool statusRedEye = true;
   late double screen;
-  late String name, user, password;
+  String? name, user, password;
 
   Container buildName() {
     return Container(
@@ -130,13 +132,17 @@ class _RegisterState extends State<Register> {
         backgroundColor: MyStyle().primaryColor,
         title: const Text('New Register'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            buildName(),
-            buildUser(),
-            buildPassword(),
-          ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusScopeNode()),
+        behavior: HitTestBehavior.opaque,
+        child: Center(
+          child: Column(
+            children: [
+              buildName(),
+              buildUser(),
+              buildPassword(),
+            ],
+          ),
         ),
       ),
     );
@@ -146,52 +152,35 @@ class _RegisterState extends State<Register> {
     return FloatingActionButton(
       backgroundColor: MyStyle().darkColor,
       onPressed: () {
-        if (kDebugMode) {
-          print('name =$name,user =$user,password =$password');
-        }
-       
-        if ((name == null) ||
-            (user == null) ||
-            (password == null))
-            /*((name?.isEmpty ?? true) ||
+        if ((name?.isEmpty ?? true) ||
             (user?.isEmpty ?? true) ||
-            (password?.isEmpty ?? true) */
-             {
-          if (kDebugMode) {
-            print('Have Space');
-          }
-          normalDialog(context, 'Have Space ? Please Fill Every Blank');
+            (password?.isEmpty ?? true)) {
+          normalDialog(context, 'Have space ? Please Fill');
         } else {
-          if (kDebugMode) {
-            print('No Space');
-          }
+          registerAndFirebase();
         }
-        //เรียกใช้ RegisterFirebase
-        registerAndFirebase();
       },
       child: const Icon(Icons.cloud_upload_rounded),
     );
   }
 
   //เชื่อมต่อ Firebase
-  Future<Null> registerAndFirebase() async {
-    await Firebase.initializeApp().then((value) async {
-      if (kDebugMode) {
-        print('###### Firebase Success ######');
-      }
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: user, password: password)
-          .then((value) async {
-        if (kDebugMode) {
-          print('Register Suceess');
-        }
-        // ignore: deprecated_member_use
-        await value.user!.updateProfile(displayName: name).then((value) =>
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/myService', (route) => false));
-      }).catchError((value) {
-        normalDialog(context, value.message);
-      });
+  Future<void> registerAndFirebase() async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: user!, password: password!)
+        .then((value) async {
+      UserModel userModel = UserModel(name: name!);
+      print('usermodel => ${userModel.toMap()}');
+      print('uid => ${value.user!.uid}');
+
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc(value.user!.uid)
+          .set(userModel.toMap())
+          .then((value) => Navigator.pushNamedAndRemoveUntil(
+              context, '/myService', (route) => false));
+    }).catchError((value) {
+      normalDialog(context, value.message);
     });
   }
 }

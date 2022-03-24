@@ -2,6 +2,7 @@ import 'package:cyc_test/utility/my_style.dart';
 import 'package:cyc_test/widget/address.dart';
 import 'package:cyc_test/widget/information_login.dart';
 import 'package:cyc_test/widget/home_screen.dart';
+import 'package:cyc_test/widget/show_time_and_type.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class MyService extends StatefulWidget {
 
 class _MyServiceState extends State<MyService> {
   //late String user, email;
-  Widget currentWidget = homePage();
+  // Widget currentWidget = homePage();
+   Widget currentWidget = const ShowTimeAndType();
   String? name, email;
 
   @override
@@ -70,7 +72,7 @@ class _MyServiceState extends State<MyService> {
       subtitle: const Text('Show all Time Slot'),
       onTap: () {
         setState(() {
-          currentWidget = homePage();
+          currentWidget = const ShowTimeAndType();
         });
         Navigator.pop(context);
       },

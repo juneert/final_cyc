@@ -13,7 +13,7 @@ class Authen extends StatefulWidget {
 class _AuthenState extends State<Authen> {
   late double screen;
   bool statusRedEye = true;
-  late String user, password;
+  String? user, password;
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +31,21 @@ class _AuthenState extends State<Authen> {
             colors: <Color>[Colors.white, MyStyle().primaryColor],
           ),
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                buildLogo(),
-                MyStyle().titleH1('Car Your Care'),
-                buildUser(),
-                buildPassword(),
-                buildLogin(),
-              ],
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusScopeNode()),
+          behavior: HitTestBehavior.opaque,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  buildLogo(),
+                  MyStyle().titleH1('Car Your Care'),
+                  buildUser(),
+                  buildPassword(),
+                  buildLogin(),
+                ],
+              ),
             ),
           ),
         ),
@@ -74,7 +78,11 @@ class _AuthenState extends State<Authen> {
           ),
         ),
         onPressed: () {
-          checkAuthen();
+          if ((user?.isEmpty ?? true) || (password?.isEmpty ?? true)) {
+            normalDialog(context, 'Have Space ? Please Fill User and Password');
+          } else {
+            checkAuthen();
+          }
         },
         child: const Text('Login'),
       ),
@@ -165,7 +173,7 @@ class _AuthenState extends State<Authen> {
   Future<void> checkAuthen() async {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: user, password: password)
+          .signInWithEmailAndPassword(email: user!, password: password!)
           .then((value) => Navigator.pushNamedAndRemoveUntil(
               context, '/myService', (route) => false))
           // ignore: invalid_return_type_for_catch_error
