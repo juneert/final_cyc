@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "595301035362",
+    "project_id": "cyc-test-54fdf",
+    "storage_bucket": "cyc-test-54fdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595301035362:android:1cb97056492aa3554b503b",
+        "android_client_info": {
+          "package_name": "com.example.cyc_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "595301035362-n5pdigj2340slbrfs81tu38tmr4hqb37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3OhVwW-J24gDJYMZC6DNMMnzrb6qoOSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "595301035362-n5pdigj2340slbrfs81tu38tmr4hqb37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
