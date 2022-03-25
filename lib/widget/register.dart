@@ -1,11 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyc_test/models/user_model.dart';
 import 'package:cyc_test/utility/dialog.dart';
 import 'package:cyc_test/utility/my_style.dart';
-import 'package:cyc_test/widget/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

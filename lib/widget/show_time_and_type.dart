@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyc_test/models/time_service_model.dart';
+import 'package:cyc_test/utility/dialog.dart';
 import 'package:cyc_test/utility/my_constant.dart';
 import 'package:cyc_test/widget/show_image.dart';
 import 'package:cyc_test/widget/show_text.dart';
 import 'package:cyc_test/widget/showchoosetime.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 //import 'package:flutter/rendering.dart';
@@ -25,10 +29,54 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
   void initState() {
     super.initState();
     dateTime = DateTime.now();
-    DateFormat dateFormat = DateFormat('dd-MMM-yyyy');
-    dateTimeStr = dateFormat.format(dateTime!);
+    changeDateToString();
+
+    readOrCreateTimeService();
+
     listTimeService.add(Myconstast.timeServiceMotos);
     listTimeService.add(Myconstast.timeServiceCars);
+  }
+
+  Future<void> readOrCreateTimeService() async {
+    await FirebaseFirestore.instance
+        .collection('timeService')
+        .doc(dateTimeStr)
+        .get()
+        .then((value) async {
+      print('value read timeService ==>> at $dateTimeStr == ${value.data()}');
+      if (value.data() == null) {
+        var carServices = <String>[];
+        for (var item in Myconstast.timeServiceCars) {
+          carServices.add('');
+        }
+
+        var motoServices = <String>[];
+        for (var item in Myconstast.timeServiceMotos) {
+          motoServices.add('');
+        }
+
+        TimeServiceModel timeServiceModel = TimeServiceModel(
+            carService: carServices,
+            motoService: motoServices,
+            workdate: Timestamp.fromDate(dateTime!));
+
+        await FirebaseFirestore.instance
+            .collection('timeService')
+            .doc(dateTimeStr)
+            .set(timeServiceModel.toMap())
+            .then((value) {
+          print('Add Doc $dateTimeStr Success');
+        });
+      } else {
+        print('Have doc => $dateTimeStr');
+      }
+    });
+  }
+
+  void changeDateToString() {
+    DateFormat dateFormat = DateFormat('dd-MMM-yyyy');
+    dateTimeStr = dateFormat.format(dateTime!);
+    print('dateTimeStr ==>> $dateTimeStr');
   }
 
   @override
@@ -42,7 +90,56 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
               newImage(constaraints),
               newSubTitle(),
               newRadioGroup(),
-              newTitle(dateTimeStr!),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      print(
+                          'diff ลดวัน ${dateTime!.difference(DateTime.now()).inDays}');
+                      if (dateTime!.difference(DateTime.now()).inDays <= 0) {
+                        setState(() {
+                          dateTime = DateTime.now();
+                        });
+                        changeDateToString();
+                        normalDialog(context,
+                            'ไม่สามารถย้อนกลับไปวันที่ ณ ที่ผ่านมาแล้ว');
+                      } else {
+                        setState(() {
+                          dateTime = DateTime.utc(
+                            dateTime!.year,
+                            dateTime!.month,
+                            dateTime!.day - 1,
+                          );
+                          changeDateToString();
+                        });
+                      }
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  newTitle(dateTimeStr!),
+                  IconButton(
+                    onPressed: () {
+                      print(
+                          'diff เพิ่มวัน ${dateTime!.difference(DateTime.now()).inDays}');
+                      if (dateTime!.difference(DateTime.now()).inDays >= 7) {
+                        normalDialog(
+                            context, 'ไม่สามารถ จองล่วงหน้าเกิน 7 วัน');
+                      } else {
+                        setState(() {
+                          dateTime = DateTime.utc(
+                            dateTime!.year,
+                            dateTime!.month,
+                            dateTime!.day + 1,
+                          );
+                          changeDateToString();
+                        });
+                      }
+                    },
+                    icon: const Icon(Icons.arrow_forward),
+                  )
+                ],
+              ),
               newChooseTimeService(),
               newReserve(constaraints)
             ],
@@ -79,7 +176,9 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
         itemBuilder: (context, index) => Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              border: Border.all(), borderRadius: BorderRadius.circular(15),),
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: ShowText(
             label: listTimeService[indexWidget][index],
             textStyle: Myconstast().h2Style(),

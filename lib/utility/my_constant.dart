@@ -17,9 +17,7 @@ class Myconstast {
     '14:00',
     '15:00',
     '16:00',
-    '17.00',
-    '18.00',
-    '19.00'
+    '17:00',
   ];
 
   static var timeServiceMotos = <String>[
@@ -41,12 +39,7 @@ class Myconstast {
     '15:30',
     '16:00',
     '16:30',
-    '17.00',
-    '17.30',
-    '18.00',
-    '18.30',
-    '19.00',
-    '19.30',
+
   ];
 
   TextStyle h1Style() => TextStyle(
