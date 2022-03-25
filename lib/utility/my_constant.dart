@@ -53,6 +53,12 @@ class Myconstast {
         fontSize: 18,
         fontWeight: FontWeight.w700,
       );
+    
+   TextStyle h2blueStyle() => const TextStyle(
+        color: Colors.blue,
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+      );
 
   TextStyle h3Style() => TextStyle(
         color: textColor,

@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyc_test/models/time_service_model.dart';
 import 'package:cyc_test/utility/dialog.dart';
 import 'package:cyc_test/utility/my_constant.dart';
+import 'package:cyc_test/widget/process_receive.dart';
 import 'package:cyc_test/widget/show_image.dart';
 import 'package:cyc_test/widget/show_text.dart';
 import 'package:cyc_test/widget/showchoosetime.dart';
+import 'package:cyc_test/widget/showpress.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +26,9 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
   DateTime? dateTime;
   String? dateTimeStr;
   var listTimeService = <List<String>>[];
+  TimeServiceModel? timeServiceModel;
+  var listTimeServiceFirebases = <List<String>>[];
+  bool load = true;
 
   @override
   void initState() {
@@ -38,12 +43,14 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
   }
 
   Future<void> readOrCreateTimeService() async {
+    if (listTimeServiceFirebases.isNotEmpty) {
+      listTimeServiceFirebases.clear();
+    }
     await FirebaseFirestore.instance
         .collection('timeService')
         .doc(dateTimeStr)
         .get()
         .then((value) async {
-      print('value read timeService ==>> at $dateTimeStr == ${value.data()}');
       if (value.data() == null) {
         var carServices = <String>[];
         for (var item in Myconstast.timeServiceCars) {
@@ -68,7 +75,13 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
           print('Add Doc $dateTimeStr Success');
         });
       } else {
-        print('Have doc => $dateTimeStr');
+        setState(() {
+          timeServiceModel = TimeServiceModel.fromMap(value.data()!);
+          listTimeServiceFirebases.add(timeServiceModel!.motoService);
+          listTimeServiceFirebases.add(timeServiceModel!.carService);
+          load = false;
+          // print('#25 Mar listTimeFirebase moto ==>> ${timeServiceModel!.toMap()}');
+        });
       }
     });
   }
@@ -90,62 +103,68 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
               newImage(constaraints),
               newSubTitle(),
               newRadioGroup(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      print(
-                          'diff ลดวัน ${dateTime!.difference(DateTime.now()).inDays}');
-                      if (dateTime!.difference(DateTime.now()).inDays <= 0) {
-                        setState(() {
-                          dateTime = DateTime.now();
-                        });
-                        changeDateToString();
-                        normalDialog(context,
-                            'ไม่สามารถย้อนกลับไปวันที่ ณ ที่ผ่านมาแล้ว');
-                      } else {
-                        setState(() {
-                          dateTime = DateTime.utc(
-                            dateTime!.year,
-                            dateTime!.month,
-                            dateTime!.day - 1,
-                          );
-                          changeDateToString();
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                  newTitle(dateTimeStr!),
-                  IconButton(
-                    onPressed: () {
-                      print(
-                          'diff เพิ่มวัน ${dateTime!.difference(DateTime.now()).inDays}');
-                      if (dateTime!.difference(DateTime.now()).inDays >= 7) {
-                        normalDialog(
-                            context, 'ไม่สามารถ จองล่วงหน้าเกิน 7 วัน');
-                      } else {
-                        setState(() {
-                          dateTime = DateTime.utc(
-                            dateTime!.year,
-                            dateTime!.month,
-                            dateTime!.day + 1,
-                          );
-                          changeDateToString();
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.arrow_forward),
-                  )
-                ],
-              ),
-              newChooseTimeService(),
+              newShowDate(context),
+              load ? const ShowProgress() : newChooseTimeService(),
               newReserve(constaraints)
             ],
           ),
         );
       }),
+    );
+  }
+
+  Row newShowDate(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          onPressed: () {
+            print('diff ลดวัน ${dateTime!.difference(DateTime.now()).inDays}');
+            if (dateTime!.difference(DateTime.now()).inDays <= 0) {
+              setState(() {
+                dateTime = DateTime.now();
+              });
+              changeDateToString();
+
+              normalDialog(
+                  context, 'ไม่สามารถย้อนกลับไปวันที่ ณ ที่ผ่านมาแล้ว');
+              readOrCreateTimeService();
+            } else {
+              setState(() {
+                dateTime = DateTime.utc(
+                  dateTime!.year,
+                  dateTime!.month,
+                  dateTime!.day - 1,
+                );
+                changeDateToString();
+                readOrCreateTimeService();
+              });
+            }
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        newTitle(dateTimeStr!),
+        IconButton(
+          onPressed: () {
+            print(
+                'diff เพิ่มวัน ${dateTime!.difference(DateTime.now()).inDays}');
+            if (dateTime!.difference(DateTime.now()).inDays >= 7) {
+              normalDialog(context, 'ไม่สามารถ จองล่วงหน้าเกิน 7 วัน');
+            } else {
+              setState(() {
+                dateTime = DateTime.utc(
+                  dateTime!.year,
+                  dateTime!.month,
+                  dateTime!.day + 1,
+                );
+                changeDateToString();
+                readOrCreateTimeService();
+              });
+            }
+          },
+          icon: const Icon(Icons.arrow_forward),
+        )
+      ],
     );
   }
 
@@ -173,15 +192,41 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
           crossAxisSpacing: 16,
           mainAxisExtent: 60,
         ),
-        itemBuilder: (context, index) => Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: ShowText(
-            label: listTimeService[indexWidget][index],
-            textStyle: Myconstast().h2Style(),
+        itemBuilder: (context, index) => InkWell(
+          onTap: () {
+            if (listTimeServiceFirebases[indexWidget][index].isEmpty) {
+             // listTimeServiceFirebases[indexWidget][index] = 'aaa';
+              // print('#25mar Your click Can Active');
+              // print(
+              //     '#25Mar ประเภทรถ 0=moto, 1=car ==> $indexWidget,dateTimeStr ==> $dateTimeStr, time ==> ${listTimeService[indexWidget][index]}');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProcessReceive(
+                    indexType: indexWidget,
+                    dateTimeStr: dateTimeStr!,
+                    timeWork: listTimeService[indexWidget][index],
+                    dateTime: dateTime!, index: index, strings: listTimeServiceFirebases[indexWidget],
+                  ),
+                ),
+              ).then((value) => readOrCreateTimeService());
+            } else {
+              normalDialog(context, 'เวลานี้ไม่ว่างคะ');
+            }
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: listTimeServiceFirebases[indexWidget][index].isEmpty
+                  ? Colors.white
+                  : Colors.pink,
+              border: Border.all(),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ShowText(
+              label: listTimeService[indexWidget][index],
+              textStyle: Myconstast().h2Style(),
+            ),
           ),
         ),
       ),
