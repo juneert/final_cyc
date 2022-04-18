@@ -1,4 +1,7 @@
 # cyc_test
+240-402 Computer Engineering Project II
+Cyc Car Your Car แอพพลิเคชันที่เกี่ยวกับการจองคิวการล้างรถ
+Parichat Kruetiaw 6035512076
 
 A new Flutter project.
 
