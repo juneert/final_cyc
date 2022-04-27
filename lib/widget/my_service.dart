@@ -16,7 +16,7 @@ class MyService extends StatefulWidget {
 class _MyServiceState extends State<MyService> {
   //late String user, email;
   // Widget currentWidget = homePage();
-   Widget currentWidget = const ShowTimeAndType();
+  Widget currentWidget = const ShowTimeAndType();
   String? name, email;
 
   @override
@@ -70,7 +70,7 @@ class _MyServiceState extends State<MyService> {
   ListTile buildShowallTimeSlot() {
     return ListTile(
       leading: const Icon(Icons.home_filled),
-      title: const Text('Index'),
+      title: const Text('หน้าหลัก & จองเวลา'),
       subtitle: const Text('Show all Time Slot'),
       onTap: () {
         setState(() {
@@ -84,7 +84,7 @@ class _MyServiceState extends State<MyService> {
   ListTile menuShowReceive() {
     return ListTile(
       leading: const Icon(Icons.receipt),
-      title: const Text('Reveive'),
+      title: const Text('ประวัติการใช้งาน'),
       subtitle: const Text('Display all Revcive'),
       onTap: () {
         setState(() {
@@ -98,7 +98,7 @@ class _MyServiceState extends State<MyService> {
   ListTile buildListTitleInformation() {
     return ListTile(
       leading: const Icon(Icons.money),
-      title: const Text('Payment'),
+      title: const Text('ช่องทางการชำระเงิน'),
       subtitle: const Text('Show all Payment'),
       onTap: () {
         setState(() {
@@ -112,7 +112,7 @@ class _MyServiceState extends State<MyService> {
   ListTile buildListTitleAddress() {
     return ListTile(
       leading: const Icon(Icons.contact_mail),
-      title: const Text('Contact'),
+      title: const Text('ช่องทางการติดต่อ'),
       subtitle: const Text('Show all Contact and Address'),
       onTap: () {
         setState(() {

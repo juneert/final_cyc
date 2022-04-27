@@ -113,6 +113,7 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
     );
   }
 
+//----------------------------//วันที่----------------------------
   Row newShowDate(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +128,7 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
               changeDateToString();
 
               normalDialog(
-                  context, 'ไม่สามารถย้อนกลับไปวันที่ ณ ที่ผ่านมาแล้ว');
+                  context, 'ไม่สามารถย้อนกลับได้');
               readOrCreateTimeService();
             } else {
               setState(() {
@@ -149,7 +150,7 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
             print(
                 'diff เพิ่มวัน ${dateTime!.difference(DateTime.now()).inDays}');
             if (dateTime!.difference(DateTime.now()).inDays >= 7) {
-              normalDialog(context, 'ไม่สามารถ จองล่วงหน้าเกิน 7 วัน');
+              normalDialog(context, 'ไม่สามารถจองล่วงหน้าได้');
             } else {
               setState(() {
                 dateTime = DateTime.utc(
@@ -171,11 +172,11 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
   SizedBox newReserve(BoxConstraints constaraints) {
     return SizedBox(
       width: constaraints.maxWidth,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Myconstast.darkColor),
-        onPressed: () {},
-        child: const Text('ทำการจอง'),
-      ),
+      // child: ElevatedButton(
+      //   style: ElevatedButton.styleFrom(primary: Myconstast.darkColor),
+      //   onPressed: () {},
+      //   child: const Text('ทำการจอง'),
+      // ),
     );
   }
 
@@ -195,7 +196,7 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             if (listTimeServiceFirebases[indexWidget][index].isEmpty) {
-             // listTimeServiceFirebases[indexWidget][index] = 'aaa';
+              // listTimeServiceFirebases[indexWidget][index] = 'aaa';
               // print('#25mar Your click Can Active');
               // print(
               //     '#25Mar ประเภทรถ 0=moto, 1=car ==> $indexWidget,dateTimeStr ==> $dateTimeStr, time ==> ${listTimeService[indexWidget][index]}');
@@ -206,12 +207,14 @@ class _ShowTimeAndTypeState extends State<ShowTimeAndType> {
                     indexType: indexWidget,
                     dateTimeStr: dateTimeStr!,
                     timeWork: listTimeService[indexWidget][index],
-                    dateTime: dateTime!, index: index, strings: listTimeServiceFirebases[indexWidget],
+                    dateTime: dateTime!,
+                    index: index,
+                    strings: listTimeServiceFirebases[indexWidget],
                   ),
                 ),
               ).then((value) => readOrCreateTimeService());
             } else {
-              normalDialog(context, 'เวลานี้ไม่ว่างคะ');
+              normalDialog(context, 'กรุณาเลือกเวลาใหม่');
             }
           },
           child: Container(

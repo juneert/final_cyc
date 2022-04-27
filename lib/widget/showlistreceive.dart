@@ -18,8 +18,7 @@ class ShowListReceive extends StatefulWidget {
 
 class _ShowListReceiveState extends State<ShowListReceive> {
   bool load = true;
-  bool?
-      haveReceive; //ถ้าเป็นจริง เท่ากับมีข้องมูลการจอง / ถ้าไม่เท็จ ไม่มีข้อมูล
+  bool? haveReceive; //ถ้าเป็นจริง เท่ากับมีข้องมูลการจอง / ถ้าไม่เท็จ ไม่มีข้อมูล
   var receiveModels = <ReceiveModel>[];
 
   @override

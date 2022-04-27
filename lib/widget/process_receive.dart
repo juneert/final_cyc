@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:cyc_test/models/receive_model.dart';
 import 'package:cyc_test/utility/dialog.dart';
 import 'package:cyc_test/utility/my_constant.dart';
@@ -98,7 +97,7 @@ class _ProcessReceiveState extends State<ProcessReceive> {
                     if ((phone?.isEmpty ?? true) ||
                         (carId?.isEmpty ?? true) ||
                         (province?.isEmpty ?? true)) {
-                      normalDialog(context, 'กรุณากรอกข้อมูลให้ครบถ้วน');
+                      normalDialog(context, 'กรุณากรอกข้อมูลให้ครบถ้วนเพื่อทำการจอง');
                     } else {
                       processSaveReceive();
                     }

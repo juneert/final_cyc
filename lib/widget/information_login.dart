@@ -1,6 +1,5 @@
 import 'package:cyc_test/widget/kbank.dart';
 import 'package:cyc_test/widget/kma.dart';
-import 'package:cyc_test/widget/map.dart';
 import 'package:cyc_test/widget/qrcode.dart';
 import 'package:cyc_test/widget/scb.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +17,9 @@ class _InformationState extends State<Information> {
     return Scaffold(
         body: Column(
       children: <Widget>[
-//################################################//
-// Column1//
-//################################################//
         Expanded(
           child: Column(
             children: <Widget>[
-//################################################//
-// Column1.1
-//################################################//
               Container(
                 height: 1,
                 width: double.infinity,
@@ -114,20 +107,9 @@ class _InformationState extends State<Information> {
                 width: double.infinity,
                 color: Colors.black12,
               ),
-
-//################################################//
-// Column1.2
-//################################################//
-
-//################################################//
-// Column1.3
-//################################################//
             ],
           ),
         ),
-//################################################//
-// Column2//
-        //################################################//
       ],
     ));
   }

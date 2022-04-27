@@ -6,9 +6,12 @@ Future<void> normalDialog(BuildContext context, String string) async {
     context: context,
     builder: (context) => SimpleDialog(
       title: ListTile(
-        //leading: Image.asset('car1.png'),
+        leading:Image.asset(
+          'images/w1.png',
+          width: 50,
+          height: 50,),
         title: Text(
-          'Normal Dialog',
+          'WARNING !!',
           style: MyStyle().redBoldStyle(),
         ),
         subtitle: Text(string),
