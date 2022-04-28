@@ -33,12 +33,26 @@ class _SCBState extends State<SCB> {
               ],
             ),
             const ListTile(
-              leading: Icon(Icons.confirmation_number),
-              title: Text('313455644'),
+              leading: Text(
+                'เลขบัญชี :',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 243, 0, 0),
+                ),
+              ),
+              title: Text('857-222584-1'),
             ),
             const ListTile(
-              leading: Icon(Icons.person_pin_rounded),
-              title: Text('Parichat kruetiaw'),
+              leading: Text(
+                'ชื่อบัญชี : ',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 243, 0, 0),
+                ),
+              ),
+              title: Text('ปาริชาติ เครือเตียว'),
             ),
           ],
         ),

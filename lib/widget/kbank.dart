@@ -32,13 +32,27 @@ class _KPlusState extends State<KPlus> {
                 )
               ],
             ),
-            const ListTile(
-              leading: Icon(Icons.confirmation_number),
-              title: Text('313455644'),
+           const ListTile(
+              leading: Text(
+                'เลขบัญชี :',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 243, 0, 0),
+                ),
+              ),
+              title: Text('092-3-45212-5'),
             ),
             const ListTile(
-              leading: Icon(Icons.person_pin_rounded),
-              title: Text('Parichat kruetaiw'),
+              leading: Text(
+                'ชื่อบัญชี : ',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 243, 0, 0),
+                ),
+              ),
+              title: Text('ปาริชาติ เครือเตียว'),
             ),
           ],
         ),

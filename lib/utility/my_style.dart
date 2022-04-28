@@ -11,7 +11,7 @@ class MyStyle {
     );
   }
 
-  TextStyle redBoldStyle() =>
+  TextStyle redBoldStyle(String s) =>
       TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold);
 
   Widget showLogo() => Image.asset('images/car1.png');
@@ -36,7 +36,7 @@ class MyStyle {
 
   Widget titleH2White(String string) => Text(
         string,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.normal,
           color: Colors.white,
@@ -54,10 +54,18 @@ class MyStyle {
 
   Widget titleH3White(String string) => Text(
         string,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           //fontWeight: FontWeight.normal,
           color: Colors.white,
+        ),
+      );
+  Widget titleH4(String string) => Text(
+        string,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color.fromARGB(255, 243, 6, 6),
         ),
       );
 

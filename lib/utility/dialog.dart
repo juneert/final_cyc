@@ -12,7 +12,7 @@ Future<void> normalDialog(BuildContext context, String string) async {
           height: 50,),
         title: Text(
           'WARNING !!',
-          style: MyStyle().redBoldStyle(),
+          style: MyStyle().redBoldStyle(''),
         ),
         subtitle: Text(string),
       ),

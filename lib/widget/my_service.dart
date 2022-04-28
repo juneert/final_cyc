@@ -1,7 +1,6 @@
 import 'package:cyc_test/utility/my_style.dart';
 import 'package:cyc_test/widget/address.dart';
 import 'package:cyc_test/widget/information_login.dart';
-import 'package:cyc_test/widget/home_screen.dart';
 import 'package:cyc_test/widget/show_time_and_type.dart';
 import 'package:cyc_test/widget/showlistreceive.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -102,7 +101,7 @@ class _MyServiceState extends State<MyService> {
       subtitle: const Text('Show all Payment'),
       onTap: () {
         setState(() {
-          currentWidget = Information();
+          currentWidget = const Information();
         });
         Navigator.pop(context);
       },
@@ -116,12 +115,13 @@ class _MyServiceState extends State<MyService> {
       subtitle: const Text('Show all Contact and Address'),
       onTap: () {
         setState(() {
-          currentWidget = Address();
+          currentWidget =  Address();
         });
         Navigator.pop(context);
       },
     );
   }
+
 
   UserAccountsDrawerHeader bildUserAccountsDrawerHeader() {
     return UserAccountsDrawerHeader(
@@ -166,4 +166,6 @@ class _MyServiceState extends State<MyService> {
       ],
     );
   }
+
+  
 }

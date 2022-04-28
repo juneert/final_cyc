@@ -42,7 +42,7 @@ class _RegisterState extends State<Register> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: MyStyle().lightColor),
+              borderSide: BorderSide(color: MyStyle().darkColor),
             ),
           ),
         ));
