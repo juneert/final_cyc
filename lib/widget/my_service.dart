@@ -1,3 +1,4 @@
+//จะเป็นหน้าเมนูต่างๆ
 import 'package:cyc_test/utility/my_style.dart';
 import 'package:cyc_test/widget/address.dart';
 import 'package:cyc_test/widget/information_login.dart';
@@ -55,9 +56,9 @@ class _MyServiceState extends State<MyService> {
             children: [
               bildUserAccountsDrawerHeader(),
               buildShowallTimeSlot(),
-              menuShowReceive(),
               buildListTitleInformation(),
               buildListTitleAddress(),
+              menuShowReceive(),
             ],
           ),
           buildSignOut(),
@@ -74,20 +75,6 @@ class _MyServiceState extends State<MyService> {
       onTap: () {
         setState(() {
           currentWidget = const ShowTimeAndType();
-        });
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  ListTile menuShowReceive() {
-    return ListTile(
-      leading: const Icon(Icons.receipt),
-      title: const Text('ประวัติการใช้งาน'),
-      subtitle: const Text('Display all Revcive'),
-      onTap: () {
-        setState(() {
-          currentWidget = const ShowListReceive();
         });
         Navigator.pop(context);
       },
@@ -115,13 +102,26 @@ class _MyServiceState extends State<MyService> {
       subtitle: const Text('Show all Contact and Address'),
       onTap: () {
         setState(() {
-          currentWidget =  Address();
+          currentWidget = Address();
         });
         Navigator.pop(context);
       },
     );
   }
 
+  ListTile menuShowReceive() {
+    return ListTile(
+      leading: const Icon(Icons.receipt),
+      title: const Text('ประวัติการใช้งาน'),
+      subtitle: const Text('Display all Revcive'),
+      onTap: () {
+        setState(() {
+          currentWidget = const ShowListReceive();
+        });
+        Navigator.pop(context);
+      },
+    );
+  }
 
   UserAccountsDrawerHeader bildUserAccountsDrawerHeader() {
     return UserAccountsDrawerHeader(
@@ -166,6 +166,4 @@ class _MyServiceState extends State<MyService> {
       ],
     );
   }
-
-  
 }

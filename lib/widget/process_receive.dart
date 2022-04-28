@@ -66,7 +66,7 @@ class _ProcessReceiveState extends State<ProcessReceive> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Myconstast.darkColor,
-        title: const Text('Process ของการจอง'),
+        title: const Text('ข้อมูลการจอง'),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusScopeNode()),
@@ -74,8 +74,8 @@ class _ProcessReceiveState extends State<ProcessReceive> {
         child: Column(
           children: [
             newTitle(head: 'ประเภทของรถ :', detail: nameTypes[indexType!]),
-            newTitle(head: 'วันที่เข้าใช้งาน', detail: dateTimeStr!),
-            newTitle(head: 'เวลาที่เข้าใช้บริการ', detail: timeWork!),
+            newTitle(head: 'วันที่เข้าใช้บริการ :', detail: dateTimeStr!),
+            newTitle(head: 'เวลาที่เข้าใช้บริการ :', detail: timeWork!),
             ShowForm(
               label: 'เบอร์ติดต่อผู้ใช้ :',
               changeFunc: (String string) => phone = string.trim(),
@@ -86,18 +86,20 @@ class _ProcessReceiveState extends State<ProcessReceive> {
               changeFunc: (String string) => carId = string.trim(),
             ),
             ShowForm(
-              label: 'จังหวัด',
+              label: 'จังหวัด :',
               changeFunc: (String string) => province = string.trim(),
             ),
             Container(
                 margin: const EdgeInsets.only(top: 16),
-                width: 250,
+                width: 300,
+                height: 40,
                 child: ElevatedButton(
                   onPressed: () {
                     if ((phone?.isEmpty ?? true) ||
                         (carId?.isEmpty ?? true) ||
                         (province?.isEmpty ?? true)) {
-                      normalDialog(context, 'กรุณากรอกข้อมูลให้ครบถ้วนเพื่อทำการจอง');
+                      normalDialog(
+                          context, 'กรุณากรอกข้อมูลให้ครบถ้วนเพื่อทำการจอง');
                     } else {
                       processSaveReceive();
                     }
