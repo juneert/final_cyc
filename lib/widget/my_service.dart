@@ -2,6 +2,7 @@
 import 'package:cyc_test/utility/my_style.dart';
 import 'package:cyc_test/widget/address.dart';
 import 'package:cyc_test/widget/information_login.dart';
+import 'package:cyc_test/widget/show_receive_admin.dart';
 import 'package:cyc_test/widget/show_time_and_type.dart';
 import 'package:cyc_test/widget/showlistreceive.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,6 +60,7 @@ class _MyServiceState extends State<MyService> {
               buildListTitleInformation(),
               buildListTitleAddress(),
               menuShowReceive(),
+              // adminModel(),
             ],
           ),
           buildSignOut(),
@@ -122,6 +124,20 @@ class _MyServiceState extends State<MyService> {
       },
     );
   }
+
+  // ListTile adminModel() {
+  //   return ListTile(
+  //     leading: const Icon(Icons.home_filled),
+  //     title: const Text('รายละเอียดการจอง'),
+  //     subtitle: const Text('Show all Receive'),
+  //     onTap: () {
+  //       setState(() {
+  //         currentWidget = const Show_receive_admin();
+  //       });
+  //       Navigator.pop(context);
+  //     },
+  //   );
+  // }
 
   UserAccountsDrawerHeader bildUserAccountsDrawerHeader() {
     return UserAccountsDrawerHeader(

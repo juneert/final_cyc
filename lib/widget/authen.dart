@@ -44,6 +44,7 @@ class _AuthenState extends State<Authen> {
                   buildUser(),
                   buildPassword(),
                   buildLogin(),
+                  // buildAdmin(),
                 ],
               ),
             ),
@@ -64,6 +65,18 @@ class _AuthenState extends State<Authen> {
           ),
         ),
       );
+
+  // TextButton buildAdmin() => TextButton(
+  //       onPressed: () => Navigator.pushNamed(context, '/adminRegister'),
+  //       child: const Text(
+  //         'Login Register',
+  //         style: TextStyle(
+  //           color: Colors.black,
+  //           fontSize: 16,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     );
 
   Container buildLogin() {
     return Container(

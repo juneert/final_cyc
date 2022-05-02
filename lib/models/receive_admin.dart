@@ -2,17 +2,15 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ReceiveModel {
+class ReceiveAdmin {
   final String carId;
   final String phone;
   final String province;
-  final String status;
   final Timestamp timeService;
-  ReceiveModel({
+  ReceiveAdmin({
     required this.carId,
     required this.phone,
     required this.province,
-    required this.status,
     required this.timeService,
   });
 
@@ -21,23 +19,20 @@ class ReceiveModel {
       'carId': carId,
       'phone': phone,
       'province': province,
-      'status': status,
       'timeService': timeService,
     };
   }
 
-  factory ReceiveModel.fromMap(Map<String, dynamic> map) {
-    return ReceiveModel(
+  factory ReceiveAdmin.fromMap(Map<String, dynamic> map) {
+    return ReceiveAdmin(
       carId: map['carId'] ?? '',
       phone: map['phone'] ?? '',
       province: map['province'] ?? '',
-      status: map['status'] ?? '',
-      timeService: (map['timeService']),
+      timeService: map['timeService'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ReceiveModel.fromJson(String source) =>
-      ReceiveModel.fromMap(json.decode(source));
+  factory ReceiveAdmin.fromJson(String source) => ReceiveAdmin.fromMap(json.decode(source));
 }

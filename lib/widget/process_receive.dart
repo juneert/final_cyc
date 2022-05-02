@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyc_test/models/receive_admin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cyc_test/models/receive_model.dart';
@@ -102,6 +103,7 @@ class _ProcessReceiveState extends State<ProcessReceive> {
                           context, 'กรุณากรอกข้อมูลให้ครบถ้วนเพื่อทำการจอง');
                     } else {
                       processSaveReceive();
+                      // processSaveAdminReceive();
                     }
                   },
                   child: const Text('ทำการจอง'),
@@ -167,4 +169,37 @@ class _ProcessReceiveState extends State<ProcessReceive> {
           .then((value) => Navigator.pop(context));
     });
   }
+
+  // Future<void> processSaveAdminReceive() async {
+  //   var user = FirebaseAuth.instance.currentUser;
+
+  //   listString![index!] = user!.uid;
+  //   Map<String, dynamic> map = {};
+  //   if (indexType == 0) {
+  //     map['motoService'] = listString;
+  //   } else {
+  //     map['carService'] = listString;
+  //   }
+
+  //   ReceiveAdmin receiveAdmin = ReceiveAdmin(
+  //       carId: carId!,
+  //       phone: phone!,
+  //       province: province!,
+  //       // status: 'wait',
+  //       timeService: Timestamp.fromDate(dateTime!));
+
+  //   await FirebaseFirestore.instance
+  //       .collection('user')
+  //       .doc(user.uid)
+  //       .collection('receive')
+  //       .doc()
+  //       .set(receiveAdmin.toMap())
+  //       .then((value) async {
+  //     await FirebaseFirestore.instance
+  //         .collection('timeService')
+  //         .doc(dateTimeStr)
+  //         .update(map)
+  //         .then((value) => Navigator.pop(context));
+  //   });
+  // }
 }
